@@ -42,20 +42,23 @@ function startTimer(fp) {
         refs.start.disabled = true;
     } else {
         const id = setInterval(() => {
-            const timerTime = convertMs(selectedDate.getTime() - (new Date().getTime()));
-            if (selectedDate.getTime() - (new Date().getTime()) === 0) { 
+            const newCurrentDate = new Date;
+            const timerTime = convertMs(selectedDate.getTime() - newCurrentDate.getTime());
+            if ((selectedDate.getTime() - newCurrentDate.getTime()) <= 0) {
                 clearInterval(id);
-            }
-
-            if (timerTime.days.toString().length === 1) {
-                refs.daysEl.innerHTML = timerTime.days.toString().padStart(2, '0');
+                refs.start.disabled = true;
             }
             else {
-                refs.daysEl.innerHTML = timerTime.days.toString();
+                if (timerTime.days.toString().length === 1) {
+                    refs.daysEl.innerHTML = timerTime.days.toString().padStart(2, '0');
                 }
-            refs.hoursEl.innerHTML = timerTime.hours.toString().padStart(2, '0');
-            refs.minutesEl.innerHTML = timerTime.minutes.toString().padStart(2, '0');
-            refs.secondsEl.innerHTML = timerTime.seconds.toString().padStart(2, '0');
+                else {
+                    refs.daysEl.innerHTML = timerTime.days.toString();
+                }
+                refs.hoursEl.innerHTML = timerTime.hours.toString().padStart(2, '0');
+                refs.minutesEl.innerHTML = timerTime.minutes.toString().padStart(2, '0');
+                refs.secondsEl.innerHTML = timerTime.seconds.toString().padStart(2, '0');
+            }
         }, 1000);
     }
 }
